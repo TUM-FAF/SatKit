@@ -25,9 +25,9 @@ class App(Tk):
     
     def redraw(self):
         
-        self.timer.set_speed(self.time_speed)
+        self.timer.set_speed(self.time_speed) # bad, should be improven,~event
         self.sats.update_satellites(self.time_speed)
-        print self.time_speed 
+        #print self.time_speed 
         # recompute "current" time, later,,,
         self.sats.anim.grid()
         self.sats.draw() 

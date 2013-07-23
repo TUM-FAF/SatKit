@@ -120,7 +120,7 @@ class Satellite:
         self.perigee_argument += self.perigee_rate * dt  
         self.raan = self.raan % (2*np.pi)
         self.perigee_argument = self.perigee_argument % (2*np.pi)
-        print self.raan, self.perigee_argument          
+        #print self.raan, self.perigee_argument          
         QxX = rotation(self.raan, self.perigee_argument, self.inclination)
         # 5. Compute (r,v)
         rX = QxX * rx       #r in geocentric equatorial XYZ frame
@@ -147,7 +147,7 @@ class Satellite:
         self.longitude = self.longitude * 180 / np.pi   # into degrees
         self.latitude = self.latitude * 180 / np.pi # into degrees
         #_____>>>achtung<<<___hardcode
-
+        # 2.84 need to be computed from current image size
         self.map_coords = (int(2.84*self.longitude), int(2.84*(90-self.latitude)))
 
 #if __name__ == '__main__':

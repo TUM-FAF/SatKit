@@ -2,27 +2,6 @@ from Tkinter import *
 
 from stime import Time 
 
-
-#
-class GetSatIndex:
-
-    def __init__(self, parent):
-
-        top = self.top = Toplevel(parent)
-
-        Label(top, text="Value").pack()
-
-        self.e = Entry(top)
-        self.e.pack(padx=5)
-        self.val = 0
-        b = Button(top, text="OK", command=self.ok)
-        b.pack(pady=5)
-
-    def ok(self):
-        self.top.val =  self.e.get()
-        self.top.destroy()
-
-
 class UserMenu(Menu):
     """ menu for app """
     def __init__(self, parent):
