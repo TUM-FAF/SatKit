@@ -1,5 +1,5 @@
 #SatKit project
-_version_ alfa.0.pow(numpy.e, complex(0, 1)*scipy.pi - 1.2246063538223773e-16j
+_version_ alfa.0.pow(numpy.e, complex(0, 1)*scipy.pi - 1.2246063538223773e-16j)
 
 Purpose of this work is to construct ground tracks for artificial satellites. 
 This script takes data from TLE files which can be found on the internet, and
@@ -12,7 +12,9 @@ requirements:
 + python2.7
 + Python Imaging Library
 
-```python moin.py```
+```
+python moin.py
+```
 
 there are already tle data, for some recent launched satellites, they can be 
 tracked adding their index from tle file, or changing the url from track.py.
