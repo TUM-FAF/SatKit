@@ -2,22 +2,46 @@ from Tkinter import *
 import tkMessageBox
 from datetime import datetime
 #from PIL import Image, ImageTk
-#import usermenu as um
+from usermenu import UserMenu
 from satellite import Satellite
 from tle import TLE
 from stime import Time
 from track import Track
 from time import sleep # REMOVE
 
-root = Tk() #main window
-root.title('SatKit ground tracking')
+class App(Tk):
+    def __init__(self, ftimer):
+        Tk.__init__(self)
+        self.timer = ftimer
+        self.timer.callback_function = self.redraw
+        self.time_speed = 1                 # normal speed
+            
+        self.sats = Track()
+        self.sats.load_local("data.txt")    # to be changed
+        self.sats.add_satellite(3)          # achtung, hardcode
+        
+        menu = UserMenu(parent = self)
+        self.config(menu = menu)
+    
+    def redraw(self):
+        
+        self.timer.set_speed(self.time_speed)
+        self.sats.update_satellites(self.time_speed)
+        print self.time_speed 
+        # recompute "current" time, later,,,
+        self.sats.anim.grid()
+        self.sats.draw() 
+
+with Time() as ftimer:   # CHANGE IT TOTALLY 
+    root = App(ftimer)
+    root.mainloop()
 
 # TODO:
 #   set grid geometry
 #   set menu
 #   set toolbar
 #   timer start/ init/ handle
-
+"""
 # BYDLOKoD BELOW
 tr = Track()
 tr.load_local('data.txt')
@@ -35,4 +59,7 @@ while i < 2000:
     sleep(0.2)
     i += 1
 
-root.mainloop()
+if __name__ == "__main__":
+    app=App()
+    app.mainloop()
+"""

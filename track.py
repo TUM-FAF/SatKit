@@ -48,10 +48,10 @@ class Track:
         fp = open(file_name, 'rw')
         fp.write(buff.read())
     
-    def update_satellites(self):
+    def update_satellites(self, dt):
         """ recalculate data about satellites """
         for (index, _id) in self.draw_sats:
-            self.satellites[index].update(15)
+            self.satellites[index].update(dt)
 #        for sat in self.satellites:
 #            sat.update(15)
     

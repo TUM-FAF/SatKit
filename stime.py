@@ -10,12 +10,12 @@ class Time:
     """
     Time representation in the app.
 
-    callbackFunction - called every TIMER_INTERVAL.
+    callback_function - called every TIMER_INTERVAL.
     Initially set to an empty function. Set it to any extern function.
 
     Time(speed = 1) - initialises with the corresponding speed;
     
-    setSpeed(speed = 1) - sets the current speed within MIN_TIME_SPEED and 
+    set_speed(speed = 1) - sets the current speed within MIN_TIME_SPEED and 
     MAX_TIME_SPEED.
     """
     #class constant definitions:
@@ -23,37 +23,34 @@ class Time:
     MAX_TIME_SPEED = DAY*365 # One year per second.
     TIMER_INTERVAL = .1 # How often the time is updated.
 
-    def callbackFunction(self):
-        #assign a callbackFunction!
+    def callback_function(self):
+        print 'helloworld!'
         pass
 
     def __init__(self, speed = 1):
-        self.currentSpeed = speed
-        self.currentTime = datetime.datetime.now()
+        self.current_speed = speed
+        self.current_time = datetime.datetime.now()
         #start time update:
-        self.__timer = Timer(self.TIMER_INTERVAL, self.__timeChanged)
+        self.__timer = Timer(self.TIMER_INTERVAL, self.__time_changed)
         self.__timer.start()
-           
-
-    def __timeChanged(self):
-        #print self.currentTime
-        interval = timedelta(seconds = self.currentSpeed * self.TIMER_INTERVAL)
-        self.currentTime += interval
+        
+    def __time_changed(self):
+        #print self.current_time
+        interval = timedelta(seconds = self.current_speed * self.TIMER_INTERVAL)
+        self.current_time += interval
         #schedule next time update:
-        self.__timer = Timer(self.TIMER_INTERVAL, self.__timeChanged)
+        self.__timer = Timer(self.TIMER_INTERVAL, self.__time_changed)
         self.__timer.start()
-        self.callbackFunction()
-        pass
-
-    def setSpeed(self, speed = 1):
+        self.callback_function()
+        
+    def set_speed(self, speed = 1):
         if (speed >= self.MIN_TIME_SPEED) and \
             (speed <= self.MAX_TIME_SPEED):
-            self.currentSpeed = speed
-            pass
+            self.current_speed = speed
+            
         else:
             print 'Cannot set speed'
-        pass
-
+        
     def __enter__(self):
         return self
 
@@ -68,5 +65,6 @@ class Time:
 if __name__ == '__main__':
     print 'asda'    
     c = Time()
-
-        
+    sleep(3)
+    c.__del__()
+       

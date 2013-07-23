@@ -116,9 +116,11 @@ class Satellite:
         rx *= np.array([[np.cos(true_anomaly)], [np.sin(true_anomaly)], [0]])   
         
         # 4. Take into consideration oblatness deviation !!Numerical errors 
-        self.raan += (self.raan_rate * dt) % (2*np.pi)
-        self.perigee_argument += (self.perigee_rate * dt) % (2*np.pi)  
-        print self.raan, self.perigee_argument, 2*np.pi  
+        self.raan += self.raan_rate * dt
+        self.perigee_argument += self.perigee_rate * dt  
+        self.raan = self.raan % (2*np.pi)
+        self.perigee_argument = self.perigee_argument % (2*np.pi)
+        print self.raan, self.perigee_argument          
         QxX = rotation(self.raan, self.perigee_argument, self.inclination)
         # 5. Compute (r,v)
         rX = QxX * rx       #r in geocentric equatorial XYZ frame
