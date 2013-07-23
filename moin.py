@@ -12,24 +12,26 @@ from time import sleep # REMOVE
 class App(Tk):
     def __init__(self, ftimer):
         Tk.__init__(self)
-        self.timer = ftimer
-        self.timer.callback_function = self.redraw
-        self.time_speed = 1                 # normal speed
-            
+          
         self.sats = Track()
         self.sats.load_local("data.txt")    # to be changed
         self.sats.add_satellite(3)          # achtung, hardcode
         
         menu = UserMenu(parent = self)
         self.config(menu = menu)
-    
+        self.title('SatKit Ground Tracking')
+
+        self.timer = ftimer
+        self.timer.callback_function = self.redraw
+        self.time_speed = 1                 # normal speed
+
     def redraw(self):
         
         self.timer.set_speed(self.time_speed) # bad, should be improven,~event
         self.sats.update_satellites(self.time_speed)
         #print self.time_speed 
         # recompute "current" time, later,,,
-        self.sats.anim.grid()
+        self.sats.anim.grid(sticky = N)
         self.sats.draw() 
 
 with Time() as ftimer:   # CHANGE IT TOTALLY 

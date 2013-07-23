@@ -1,5 +1,6 @@
 from Tkinter import *
-
+from tkFileDialog import *
+from track import Track # remove
 from stime import Time 
 
 class UserMenu(Menu):
@@ -10,6 +11,7 @@ class UserMenu(Menu):
         
         self.add_cascade(label = "File", menu = file_menu)
         file_menu.add_command(label = "New", command = self.callback)
+        file_menu.add_command(label = "Open", command = self.open_tle)
         file_menu.add_command(label = "Exit", command = self.quit)
     
         time_menu = Menu(self, tearoff = False)
@@ -21,6 +23,12 @@ class UserMenu(Menu):
         self.master = parent
     def callback(self):
         print 'to be defined later'
+    def open_tle(self):
+        file_name = askopenfilename()
+
+        self.master.sats.load_local(file_name)
+        # to add dialog for choosing satellites, or on the list
+        self.master.sats.add_satellite(17)
 
     def faster(self):
         if self.master.time_speed < 10:
