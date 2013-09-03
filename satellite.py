@@ -150,5 +150,8 @@ class Satellite:
         # 2.84 need to be computed from current image size
         self.map_coords = (int(2.84*self.longitude), int(2.84*(90-self.latitude)))
 
+    def get_coords(self, dt):
+        """ computes map coords at a given time delay"""
+        
 #if __name__ == '__main__':
 #here may be added code for debugging
