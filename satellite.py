@@ -1,4 +1,5 @@
 import numpy as np
+improt copy
 from datetime import timedelta, datetime
 
 miu = 398600                # could be changed by G * (M + m)
@@ -60,7 +61,8 @@ class Satellite:
         self.r = None
         self.v = None
         self.map_coords = (0, 0)
-        
+        self.trajectory = []
+
         # for ground tracking:
         self.longitude = 0 # degrees
         self.latitude = 0 # degrees [-90(S); 90(N)]
@@ -89,8 +91,7 @@ class Satellite:
     #Call this from global update:
     def update(self, dt):  
         self.t += dt
-        if self.t > self.period: # a new period starts
-            self.t = self.t % self.period
+        self.t = self.t % self.period
         
         # 1. Recompute Mean anomaly:
         self.mean_anomaly = 2 * np.pi * self.t / self.period  # in radians 
@@ -150,8 +151,26 @@ class Satellite:
         # 2.84 need to be computed from current image size
         self.map_coords = (int(2.84*self.longitude), int(2.84*(90-self.latitude)))
 
-    def get_coords(self, dt):
-        """ computes map coords at a given time delay"""
+    def get_coords(self, interval = 86400, step = 600):
+        """ computes trajectory points 
+
+        for given interval at given resolution
+        by default - plus minus one day, 10 minutes
+        """
+        t = -interval
+        buff = copy.copy(self)
+        buff.update(t)
+        while t<interval:
+            self.trajectory.append(buff.map_coords)
+            t += step
+        del buff
         
+    def upd_coords(self, interval = 86400):
+        buff = copy.copy(self)
+        buff.update(interval)   # computed after one step
+        self.trajectory = self.trajectory[1:]
+        self.trajectory.append(buff.map_coords)
+        del buff
+    
 #if __name__ == '__main__':
 #here may be added code for debugging
