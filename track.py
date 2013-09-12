@@ -56,13 +56,15 @@ class Track:
 #            sat.update(15)
     
     def add_satellite(self, index):
-        #index will be taken from GUI,,,aditional images can be added
+        # index will be taken from GUI,,,aditional images can be added
         _id = self.anim.create_image(self.satellites[index].map_coords, 
                                      image = self.sat_img)
-        self.draw_sats.append((index, _id))
-        
+        self.draw_sats.append((index, _id)) # better use dictionaries
+        # testing:
+        self.satellites[index].get_coords()
+        self.anim.create_line(self.satellites[index].trajectory)
     def draw(self):
         """updates position of the satellites on the canvas"""
         for (index, _id) in self.draw_sats:
             self.anim.coords(_id, self.satellites[index].map_coords)
-        
+             

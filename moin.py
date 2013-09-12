@@ -15,7 +15,7 @@ class App(Tk):
           
         self.sats = Track()
         self.sats.load_local("data.txt")    # to be changed
-        self.sats.add_satellite(3)          # achtung, hardcode
+        self.sats.add_satellite(7)          # achtung, hardcode
         
         menu = UserMenu(parent = self)
         self.config(menu = menu)

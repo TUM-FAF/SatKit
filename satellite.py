@@ -1,5 +1,5 @@
 import numpy as np
-improt copy
+import copy
 from datetime import timedelta, datetime
 
 miu = 398600                # could be changed by G * (M + m)
@@ -151,11 +151,11 @@ class Satellite:
         # 2.84 need to be computed from current image size
         self.map_coords = (int(2.84*self.longitude), int(2.84*(90-self.latitude)))
 
-    def get_coords(self, interval = 86400, step = 600):
+    def get_coords(self, interval = 18000, step = 600):
         """ computes trajectory points 
 
         for given interval at given resolution
-        by default - plus minus one day, 10 minutes
+        by default - plus minus 5h, 10 minutes
         """
         t = -interval
         buff = copy.copy(self)
@@ -163,6 +163,7 @@ class Satellite:
         while t<interval:
             self.trajectory.append(buff.map_coords)
             t += step
+            buff.update(step)
         del buff
         
     def upd_coords(self, interval = 86400):
