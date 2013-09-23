@@ -57,6 +57,7 @@ class Satellite:
         self.mean_anomaly = tle.mean_anomaly *np.pi / 180   # rad
         self.mean_motion = tle.n                            # revs/day
         
+        self.theta_offset = 0
         # position, velocity, computed after first update
         self.r = None
         self.v = None
@@ -86,13 +87,16 @@ class Satellite:
         self.t = (current_time-tle.time-dt).total_seconds() % self.period   
         
         # update of data, because of earth oblateness 
-        self.update((current_time-tle.time).total_seconds())
-        
+        self.update((current_time-tle.time).total_seconds()) 
+    
     #Call this from global update:
     def update(self, dt):  
         self.t += dt
-        self.t = self.t % self.period
-        
+        if self.t>self.period:
+            self.t = self.t % self.period
+            #self.theta_offset=int(dt/self.period)*(72.9217 * pow(10,-6))
+            self.theta_offset += self.period * 72.9217 * pow(10,-6)
+            self.theta_offset = self.theta_offset % (2*np.pi)
         # 1. Recompute Mean anomaly:
         self.mean_anomaly = 2 * np.pi * self.t / self.period  # in radians 
 
@@ -127,7 +131,7 @@ class Satellite:
         rX = QxX * rx       #r in geocentric equatorial XYZ frame
         self.r = rX
 
-        theta = 72.9217 * pow(10,-6) * self.t
+        theta = self.theta_offset + 72.9217 * pow(10,-6) * self.t
         r_xr = np.matrix([[np.cos(theta),
                            np.sin(theta), 0],
                           [-np.sin(theta),
@@ -151,7 +155,7 @@ class Satellite:
         # 2.84 need to be computed from current image size
         self.map_coords = (int(2.84*self.longitude), int(2.84*(90-self.latitude)))
 
-    def get_coords(self, interval = 18000, step = 600):
+    def get_coords(self, interval = 1800, step = 60):
         """ computes trajectory points 
 
         for given interval at given resolution
