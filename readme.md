@@ -1,5 +1,5 @@
 #SatKit project
-_version_ alfa.0.pow(numpy.e, complex(0, 1)*scipy.pi - 1.2246063538223773e-16j)
+_version_ alfa.0.0
 
 Purpose of this work is to construct ground tracks for artificial satellites. 
 This script takes data from TLE files which can be found on the internet, and
@@ -7,13 +7,14 @@ according to the parameters of the satellite it computes current position, in
 several coordinate frames, and it also can compute velocity, need to add few 
 lines of code.
 
+
 ### Running
 requirements:
 + python2.7
 + Python Imaging Library
 
 ```
-python moin.py
+$ python moin.py
 ```
 
 there are already tle data, for some recent launched satellites, they can be 
@@ -31,3 +32,6 @@ _there may be some difference between output of the script and real data_
 * compute position from TLE **done**
 * integrate with time
 * synchronize satellite with real time 
+* find a better way of representing tracks(earth is spheric, 
+    map is rectangular)
+
