@@ -7,14 +7,12 @@ according to the parameters of the satellite it computes current position, in
 several coordinate frames, and it also can compute velocity, need to add few 
 lines of code.
 
-<<<<<<< HEAD
-=======
 ### Installing on Ubuntu
 
     git clone git@github.com:TUM-FAF/SatKit.git
     sudo apt-get build-dep python-imaging
     sudo apt-get install libjpeg62 libjpeg62-dev python-imaging-tk
->>>>>>> f9320aaa4956ff150069d33ebc3bf67c4c378c92
+
 
 ### Running
 requirements:
